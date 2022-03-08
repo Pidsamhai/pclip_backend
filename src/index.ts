@@ -1,9 +1,10 @@
 import express from "express";
 import notFoundController from "@/controller/notfound.controller";
-import rootRoute from "@/router/root.router";
 import loggerMiddleware from "@/middleware/logger.middleware";
 import cors from "cors";
 import rateLimit from "express-rate-limit";
+import route from "./router";
+import swaggerDoc from "./component/swagger-doc";
 
 const server = express();
 
@@ -22,10 +23,13 @@ server.use(
     message: { message: "Too many requests, please try again later." },
   })
 );
+
+swaggerDoc(server);
 server.use(loggerMiddleware);
-server.use(rootRoute);
+server.use(route);
 server.use(notFoundController);
 
 server.listen(port, () => {
-  console.log("\x1b[36m", `$ App listen on http://localhost:${port}`);
+  console.log("\x1b[36m", `$ 🚀 App listen on http://localhost:${port}`);
+  console.log("\x1b[36m", `$ 📗 ApiDocs http://localhost:${port}/api-docs`);
 });
