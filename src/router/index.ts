@@ -2,6 +2,9 @@ import express from "express";
 import indexController from "@/controller/root.controller";
 import creatAnonymousContoller from "@/controller/creat-anonymous.contoller";
 import annonMiddleware from "@/middleware/annon.middleware";
+import createMockUserController from "@/controller/create-mock-user.controller";
+import createRoomInviteController from "@/controller/create-room-invite.controller";
+import secretMiddleware from "@/middleware/secret.middleware";
 
 const route = express.Router();
 
@@ -20,7 +23,7 @@ route.all("/", indexController);
 /**
  * POST /auth/anonymous
  * @summary Create an anonymous account
- * @security JWT
+ * @security ANON
  * @return {object} 201 - success response - application/json
  * @return {object} 401 - error response - application/json
  * @example response - 201 - success response
@@ -57,5 +60,42 @@ route.all("/", indexController);
  * }
  */
 route.post("/auth/anonymous", annonMiddleware, creatAnonymousContoller);
+
+/**
+ * POST /auth/mockuser
+ * @summary Create mock user with verified email
+ * @security SECRET
+ * @return {object} 201 - success response - application/json
+ * @return {object} 401 - error response - application/json
+ * @example response - 201 - success response
+ * {
+ *  "email": "",
+ *  "password": ""
+ * }
+ * @example response - 401 - error response
+ * {
+ *    "message": "UnAuthorized"
+ * }
+ */
+route.post("/auth/mockuser", secretMiddleware, createMockUserController);
+
+/**
+ * POST /room/invite/{room_id}
+ * @summary Create room invite
+ * @param {string} room_id.path.required - room id
+ * @param {RequestInvite} request.body.required - room secret - application/json
+ * @return {object} 201 - success response - application/json
+ * @return {object} 401 - error response - application/json
+ * @example response - 201 - success response
+ * {
+ *  "invite_id": "UUID",
+ *  "secret": "<invite secret>"
+ * }
+ * @example response - 401 - error response
+ * {
+ *    "message": "UnAuthorized"
+ * }
+ */
+route.post("/room/invite/:room_id", createRoomInviteController);
 
 export default route;
