@@ -1,0 +1,130 @@
+{
+	"components": {
+		"examples": {},
+		"headers": {},
+		"parameters": {},
+		"requestBodies": {},
+		"responses": {},
+		"schemas": {
+			"DefaultResponse": {
+				"properties": {
+					"message": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"message"
+				],
+				"type": "object",
+				"additionalProperties": false
+			}
+		},
+		"securitySchemes": {
+			"gh_token": {
+				"type": "http",
+				"scheme": "bearer",
+				"bearerFormat": "JWT"
+			}
+		}
+	},
+	"info": {
+		"title": "express_template",
+		"version": "1.0.0",
+		"description": "Express application template using typescript and eslint",
+		"license": {
+			"name": "MIT"
+		},
+		"contact": {
+			"name": "Pisamhai ",
+			"url": "พิสมัย"
+		}
+	},
+	"openapi": "3.0.0",
+	"paths": {
+		"/github/{user}/repos": {
+			"get": {
+				"operationId": "GetUserRepos",
+				"responses": {
+					"200": {
+						"description": "success",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {},
+									"type": "object"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "error",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DefaultResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Sample Github Api"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "user",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/github/repos": {
+			"get": {
+				"operationId": "GetPrivateUserRepos",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {},
+									"type": "object"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DefaultResponse"
+								}
+							}
+						}
+					}
+				},
+				"description": "Get repositories using personal token\n<br> <a href=\"https://api.github.com/user/repos\">https://api.github.com/user/repos</a>",
+				"tags": [
+					"Sample Github Api"
+				],
+				"security": [
+					{
+						"gh_token": []
+					}
+				],
+				"parameters": []
+			}
+		}
+	},
+	"servers": [
+		{
+			"url": "/"
+		}
+	]
+}

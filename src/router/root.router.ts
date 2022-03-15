@@ -1,5 +1,5 @@
 import express from "express";
-import indexController from "@/controller/root.controller";
+import indexController from "../component/root";
 
 const route = express.Router();
 
