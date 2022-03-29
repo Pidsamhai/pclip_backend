@@ -6,7 +6,8 @@ const options = <Options>{
   info: {
     version: "1.0.0",
     title: "Pclip Api Docs",
-    description: "",
+    description: `<strong>SECRET: </strong><span>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6InNlcnZpY2Vfcm9sZSJ9.vI9obAHOGyVVKa3pD--kJlyxp-Z2zV9UUMAhKpNLAcU</span> <br>
+      <strong>ANON: </strong><span>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24ifQ.625_WdcF3KHqz5amU0x2X5WWHP-OEs_4qj0ssLNHzTs</span>`,
     license: {
       name: "MIT",
     },

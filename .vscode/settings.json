@@ -2,5 +2,8 @@
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "[typescript]": {
     "editor.formatOnSave": true
+  },
+  "[sql]": {
+    "editor.defaultFormatter": "bradymholt.pgformatter"
   }
 }

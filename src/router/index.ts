@@ -1,10 +1,12 @@
 import express from "express";
 import indexController from "@/controller/root.controller";
 import creatAnonymousContoller from "@/controller/creat-anonymous.contoller";
-import annonMiddleware from "@/middleware/annon.middleware";
 import createMockUserController from "@/controller/create-mock-user.controller";
 import createRoomInviteController from "@/controller/create-room-invite.controller";
-import secretMiddleware from "@/middleware/secret.middleware";
+import userAuthMiddleware from "@/middleware/user-auth.middleware";
+import jwtAuthFactoryMiddleware from "@/middleware/jwt-auth-factory.middleware";
+import joinRoomController from "@/controller/join-room.controller";
+import updaterController from "@/controller/updater.controller";
 
 const route = express.Router();
 
@@ -59,7 +61,11 @@ route.all("/", indexController);
  *    "message": "UnAuthorized"
  * }
  */
-route.post("/auth/anonymous", annonMiddleware, creatAnonymousContoller);
+route.post(
+  "/auth/anonymous",
+  jwtAuthFactoryMiddleware("anon"),
+  creatAnonymousContoller
+);
 
 /**
  * POST /auth/mockuser
@@ -77,11 +83,16 @@ route.post("/auth/anonymous", annonMiddleware, creatAnonymousContoller);
  *    "message": "UnAuthorized"
  * }
  */
-route.post("/auth/mockuser", secretMiddleware, createMockUserController);
+route.post(
+  "/auth/mockuser",
+  jwtAuthFactoryMiddleware("service_role"),
+  createMockUserController
+);
 
 /**
- * POST /room/invite/{room_id}
+ * POST /room/{room_id}/invite
  * @summary Create room invite
+ * @security USER
  * @param {string} room_id.path.required - room id
  * @param {RequestInvite} request.body.required - room secret - application/json
  * @return {object} 201 - success response - application/json
@@ -96,6 +107,37 @@ route.post("/auth/mockuser", secretMiddleware, createMockUserController);
  *    "message": "UnAuthorized"
  * }
  */
-route.post("/room/invite/:room_id", createRoomInviteController);
+route.post(
+  "/room/:room_id/invite",
+  userAuthMiddleware,
+  createRoomInviteController
+);
+
+/**
+ * POST /room/join
+ * @summary Join room
+ * @security USER
+ * @param {RequestJoinRoom} request.body.required - room secret - application/json
+ * @return {object} 201 - success response - application/json
+ * @return {object} 401 - error response - application/json
+ * @example response - 201 - success response
+ * {
+ *    "room_id": "UUID",
+ *    "secret": "SECRET"
+ * }
+ * @example response - 401 - error response
+ * {
+ *    "message": "UnAuthorized"
+ * }
+ */
+route.post("/room/join", userAuthMiddleware, joinRoomController);
+
+/**
+ * GET /updater
+ * @summary Get update for desktop app
+ * @return {UpdaterResponse} 200 - success update found - application/json
+ * @return 204 - No update
+ */
+route.get("/updater", updaterController);
 
 export default route;

@@ -10,5 +10,10 @@ export default async function (_req: Request, res: Response): Promise<void> {
     password,
     email_confirm: true,
   });
-  res.status(201).json({ email: email, password: password });
+  const { data } = await supabase.auth.api.signInWithEmail(email, password);
+  res.status(201).json({
+    email: email,
+    password: password,
+    token: data?.access_token,
+  });
 }
