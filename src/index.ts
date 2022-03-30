@@ -10,10 +10,13 @@ const server = express();
 
 const port = process.env.PORT || 5000;
 
+server.use(express.json());
+swaggerDoc(server);
+server.use(loggerMiddleware);
 server.use(
   cors({
-    origin: `http://localhost:${port}`,
-    credentials: true,
+    // origin: `http://localhost:${port}`,
+    // credentials: true,
   })
 );
 server.use(
@@ -24,9 +27,7 @@ server.use(
   })
 );
 
-swaggerDoc(server);
-server.use(loggerMiddleware);
-server.use(route);
+server.use("/api/v1", route);
 server.use(notFoundController);
 
 server.listen(port, () => {
