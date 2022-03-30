@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import supabase from "@/component/supabase";
+import supabase from "../component/supabase";
 import randomatic from "randomatic";
 import bcrypt from "bcrypt";
 import crypto from "crypto-js";

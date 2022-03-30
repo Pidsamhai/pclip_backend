@@ -1,0 +1,10 @@
+tsconfig.json
+tsconfig.dev.json
+.eslintrc.js
+.env.sample
+src
+.vscode
+supabase
+.husky
+*.md
+*.sql

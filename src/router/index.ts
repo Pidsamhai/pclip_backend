@@ -1,12 +1,12 @@
 import express from "express";
-import indexController from "@/controller/root.controller";
-import creatAnonymousContoller from "@/controller/creat-anonymous.contoller";
-import createMockUserController from "@/controller/create-mock-user.controller";
-import createRoomInviteController from "@/controller/create-room-invite.controller";
-import userAuthMiddleware from "@/middleware/user-auth.middleware";
-import jwtAuthFactoryMiddleware from "@/middleware/jwt-auth-factory.middleware";
-import joinRoomController from "@/controller/join-room.controller";
-import updaterController from "@/controller/updater.controller";
+import indexController from "../controller/root.controller";
+import creatAnonymousContoller from "../controller/creat-anonymous.contoller";
+import createMockUserController from "../controller/create-mock-user.controller";
+import createRoomInviteController from "../controller/create-room-invite.controller";
+import userAuthMiddleware from "../middleware/user-auth.middleware";
+import jwtAuthFactoryMiddleware from "../middleware/jwt-auth-factory.middleware";
+import joinRoomController from "../controller/join-room.controller";
+import updaterController from "../controller/updater.controller";
 
 const route = express.Router();
 
