@@ -1,11 +1,8 @@
 import { Request, Response } from "express";
-import pkg from "../../package.json";
 
-export default function (req: Request, res: Response) {
+export default function (_req: Request, res: Response) {
   res.json({
-    message: pkg.description,
-    author: pkg.author,
-    repository: pkg.repository,
-    version: pkg.version,
+    message: "🚀🚀 Server Alive",
+    time: Date.now(),
   });
 }
