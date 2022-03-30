@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import supabase from "@/component/supabase";
+import supabase from "../component/supabase";
 import { v4 } from "uuid";
 
 export default async function (_req: Request, res: Response): Promise<void> {

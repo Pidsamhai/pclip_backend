@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import supabase from "@/component/supabase";
+import supabase from "../component/supabase";
 
 export default async function (
   req: Request,

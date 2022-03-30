@@ -7,8 +7,8 @@
   "scripts": {
     "prepare": "husky install",
     "lint": "eslint --ext .js,.ts .",
-    "build": "tsc && tsc-alias",
-    "serve": "npx nodemon --exec 'ts-node -r tsconfig-paths/register src/index.ts'"
+    "build": "tsc",
+    "serve": "npx nodemon --exec 'ts-node src/index.ts'"
   },
   "author": "Pisamhai (พิสมัย)",
   "license": "MIT",
@@ -30,11 +30,11 @@
     "express-jsdoc-swagger": "^1.6.7",
     "husky": "^7.0.4",
     "nodemon": "^2.0.15",
+    "swagger-ui-dist": "^4.10.0",
     "ts-node": "^10.4.0",
-    "tsc-alias": "^1.5.0",
-    "tsconfig-paths": "^3.12.0",
     "tslint-config-prettier": "^1.18.0",
-    "typescript": "^4.5.5"
+    "typescript": "^4.5.5",
+    "vercel": "^24.0.1"
   },
   "dependencies": {
     "@supabase/supabase-js": "^1.30.6",
