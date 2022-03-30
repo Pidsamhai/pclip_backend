@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import supabase from "@/component/supabase";
-import { RoomInvite } from "@/types/room-invite";
+import supabase from "../component/supabase";
+import { RoomInvite } from "../types/room-invite";
 import bcrypt from "bcrypt";
 import crypto from "crypto-js";
 

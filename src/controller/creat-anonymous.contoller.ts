@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import supabase from "@/component/supabase";
+import supabase from "../component/supabase";
 import { v4 } from "uuid";
 import randomatic from "randomatic";
 import dotenv from "dotenv";
