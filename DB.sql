@@ -34,19 +34,13 @@ CREATE TABLE IF NOT EXISTS public.room_member_invite (
 -- Handle insert owner room member
 CREATE OR REPLACE FUNCTION public.handle_member ()
   RETURNS TRIGGER
-  AS $
-$
+  AS $$
 BEGIN
-  INSERT INTO public.room_member (room_id, member_id, device_name)
-    VALUES (new.id, new.owner, 'Owner');
-
-RETURN new;
-
+    INSERT INTO public.room_member (room_id, member_id, device_name)
+    VALUES (new.id, new.owner, 'owner');
+  RETURN new;
 END;
-
-$ $
-LANGUAGE plpgsql
-SECURITY DEFINER;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
 
 CREATE TRIGGER on_room_created
   AFTER INSERT ON public.room
@@ -58,14 +52,10 @@ CREATE OR REPLACE FUNCTION get_room_auth_user ()
   LANGUAGE sql
   SECURITY DEFINER
   SET search_path = public STABLE
-  AS $
-$
-SELECT
-  room_id
-FROM
-  room_member
-WHERE
-  member_id = auth.uid () $ $;
+  AS $$ 
+    SELECT room_id FROM room_member
+    WHERE member_id = auth.uid () 
+  $$;
 
 -- Check auth room owner
 CREATE OR REPLACE FUNCTION is_owner (room_id uuid)
@@ -73,29 +63,21 @@ CREATE OR REPLACE FUNCTION is_owner (room_id uuid)
   LANGUAGE sql
   SECURITY DEFINER
   SET search_path = public STABLE
-  AS $
-$
-SELECT
-  TRUE
-FROM
-  room
-WHERE
-  OWNER = auth.uid () $ $;
+  AS $$
+    SELECT TRUE FROM room
+    WHERE owner = auth.uid () 
+  $$;
 
 CREATE OR REPLACE FUNCTION is_member (room_id uuid)
   RETURNS boolean
   LANGUAGE sql
   SECURITY DEFINER
   SET search_path = public STABLE
-  AS $
-$
-SELECT
-  TRUE
-FROM
-  room_member
-WHERE
-  member_id = auth.uid ()
-  AND room_id = room_id $ $;
+  AS $$
+    SELECT TRUE FROM room_member
+    WHERE member_id = auth.uid ()
+    AND room_id = room_id 
+  $$;
 
 -- CREATE POLICY
 -- ROOM
@@ -113,7 +95,7 @@ CREATE POLICY "Allow user can create room" ON room
 
 CREATE POLICY "Allow member can update room" ON public.room
   FOR UPDATE
-    WITH CHECK ((auth.uid () = OWNER));
+    WITH CHECK ((auth.uid () = owner));
 
 -- MESSAGE
 CREATE POLICY "Allow member can read message" ON room_message
@@ -170,17 +152,16 @@ CREATE EXTENSION IF NOT EXISTS pg_cron;
 SELECT
   cron.schedule ('message-cleaner', '0 0 * * *',
     -- At 00:00
-    $ $ DELETE FROM room_message
+    $$ DELETE FROM room_message
     WHERE expired < now();
-
-$ $);
+    $$);
 
 SELECT
   cron.schedule ('room-cleaner',
     -- delete room if no member exist
     '0 0 * * *',
     -- At 00:00
-    $ $ DELETE FROM room
+    $$ DELETE FROM room
     WHERE id IN (
         SELECT
           id
@@ -188,8 +169,7 @@ SELECT
       LEFT JOIN room_member ON id = room_id GROUP BY id
     HAVING
       count(member_id) > 1);
-
-$ $);
+    $$);
 
 -- Unschedule
 -- SELECT cron.unschedule(1) FROM cron.job;

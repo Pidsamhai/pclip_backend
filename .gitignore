@@ -6,3 +6,8 @@ node_modules/
 
 **/.env
 **/*.local
+.vercel
+
+# Supabase
+**/supabase/.branches
+**/supabase/.temp
