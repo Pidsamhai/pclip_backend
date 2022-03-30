@@ -1,4 +1,5 @@
 {
-    "watch": ["src/"],
-    "ext": "ts, json"
-  }
+    "watch": ["src/","src/tsoa/custom-template.ts.hbs", "tsoa.json"],
+    "ext": "ts, json, hbs",
+    "ignore": ["src/tsoa/routes.ts","src/tsoa/swagger.json"]
+}

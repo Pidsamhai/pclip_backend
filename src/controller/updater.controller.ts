@@ -1,7 +1,16 @@
-import { Request, Response } from "express";
+import { Updater } from "../types/updater";
+import { Controller, Get, Response, Route, SuccessResponse } from "tsoa";
 
-export default async function (req: Request, res: Response) {
-  const body = `
+@Route("updater")
+export class UpdaterController extends Controller {
+  /**
+   * @summary Get update for desktop app
+   */
+  @Get("/")
+  @SuccessResponse(200, "success")
+  @Response(204, "no update")
+  public async getUpdate() {
+    const body = `
   Marked - Markdown Parser
 ========================
 
@@ -50,23 +59,24 @@ Ready to start writing?  Either start changing stuff on the left or
 Right aligned columns
     `;
 
-  res.json({
-    name: "v1.0.0",
-    notes: body,
-    pub_date: "2020-06-22T19:25:57Z",
-    platforms: {
-      darwin: {
-        signature: "",
-        url: "https://github.com/lemarier/tauri-test/releases/download/v1.0.0/app.app.tar.gz",
+    return <Updater>{
+      name: "v1.0.0",
+      notes: body,
+      pub_date: "2020-06-22T19:25:57Z",
+      platforms: {
+        darwin: {
+          signature: "",
+          url: "https://github.com/lemarier/tauri-test/releases/download/v1.0.0/app.app.tar.gz",
+        },
+        linux: {
+          signature: "",
+          url: "https://github.com/lemarier/tauri-test/releases/download/v1.0.0/app.AppImage.tar.gz",
+        },
+        win64: {
+          signature: "",
+          url: "https://github.com/lemarier/tauri-test/releases/download/v1.0.0/app.x64.msi.zip",
+        },
       },
-      linux: {
-        signature: "",
-        url: "https://github.com/lemarier/tauri-test/releases/download/v1.0.0/app.AppImage.tar.gz",
-      },
-      win64: {
-        signature: "",
-        url: "https://github.com/lemarier/tauri-test/releases/download/v1.0.0/app.x64.msi.zip",
-      },
-    },
-  });
+    };
+  }
 }

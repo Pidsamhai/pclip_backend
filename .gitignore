@@ -11,3 +11,4 @@ node_modules/
 # Supabase
 **/supabase/.branches
 **/supabase/.temp
+package-lock.json
