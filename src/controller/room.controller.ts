@@ -17,7 +17,7 @@ import crypto from "crypto-js";
 import { SSecurity } from "../types/security";
 import randomatic from "randomatic";
 import { UnAuthorized } from "../types/exceptions";
-import { JoinRoomBodyParams } from "src/types/params";
+import { JoinRoomBodyParams } from "../types/params";
 
 @Route("room")
 export class RoomController extends Controller {

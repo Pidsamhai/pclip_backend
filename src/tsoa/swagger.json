@@ -187,6 +187,26 @@
 				"type": "object",
 				"additionalProperties": false
 			},
+			"JoinRoomBodyParams": {
+				"properties": {
+					"invite_id": {
+						"type": "string"
+					},
+					"secret": {
+						"type": "string"
+					},
+					"device_name": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"invite_id",
+					"secret",
+					"device_name"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"Platform": {
 				"properties": {
 					"signature": {
@@ -411,23 +431,7 @@
 					"content": {
 						"application/json": {
 							"schema": {
-								"properties": {
-									"device_name": {
-										"type": "string"
-									},
-									"secret": {
-										"type": "string"
-									},
-									"invite_id": {
-										"type": "string"
-									}
-								},
-								"required": [
-									"device_name",
-									"secret",
-									"invite_id"
-								],
-								"type": "object"
+								"$ref": "#/components/schemas/JoinRoomBodyParams"
 							}
 						}
 					}

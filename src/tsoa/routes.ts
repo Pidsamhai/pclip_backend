@@ -70,6 +70,15 @@ const models: TsoaRoute.Models = {
         },
         "additionalProperties": false,
     },
+    "JoinRoomBodyParams": {
+        "dataType": "refObject",
+        "properties": {
+            "invite_id": {"dataType":"string","required":true},
+            "secret": {"dataType":"string","required":true},
+            "device_name": {"dataType":"string","required":true},
+        },
+        "additionalProperties": false,
+    },
     "Platform": {
         "dataType": "refObject",
         "properties": {
@@ -144,7 +153,7 @@ export function RegisterRoutes(app: any) {
             function (request: any, response: any, next: any) {
             const args = {
                     req: {"in":"request","name":"req","required":true,"dataType":"object"},
-                    params: {"in":"body","name":"params","required":true,"dataType":"nestedObjectLiteral","nestedProperties":{"device_name":{"dataType":"string","required":true},"secret":{"dataType":"string","required":true},"invite_id":{"dataType":"string","required":true}}},
+                    params: {"in":"body","name":"params","required":true,"ref":"JoinRoomBodyParams"},
             };
 
             let validatedArgs: any[] = [];
