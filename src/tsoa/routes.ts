@@ -79,30 +79,14 @@ const models: TsoaRoute.Models = {
         },
         "additionalProperties": false,
     },
-    "Platform": {
-        "dataType": "refObject",
-        "properties": {
-            "signature": {"dataType":"string","required":true},
-            "url": {"dataType":"string","required":true},
-        },
-        "additionalProperties": false,
-    },
-    "Platforms": {
-        "dataType": "refObject",
-        "properties": {
-            "darwin": {"ref":"Platform","required":true},
-            "linux": {"ref":"Platform","required":true},
-            "win64": {"ref":"Platform","required":true},
-        },
-        "additionalProperties": false,
-    },
     "Updater": {
         "dataType": "refObject",
         "properties": {
-            "name": {"dataType":"string","required":true},
+            "url": {"dataType":"string","required":true},
+            "version": {"dataType":"string","required":true},
             "notes": {"dataType":"string","required":true},
             "pub_date": {"dataType":"string","required":true},
-            "platforms": {"ref":"Platforms","required":true},
+            "signature": {"dataType":"string","required":true},
         },
         "additionalProperties": false,
     },
@@ -190,9 +174,11 @@ export function RegisterRoutes(app: any) {
             const promise = controller.inviteMember.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, next);
         });
-        app.get('/api/v1/updater',
+        app.get('/api/v1/updater/:target/:version',
             function (request: any, response: any, next: any) {
             const args = {
+                    target: {"in":"path","name":"target","required":true,"dataType":"string"},
+                    version: {"in":"path","name":"version","required":true,"dataType":"string"},
             };
 
             let validatedArgs: any[] = [];

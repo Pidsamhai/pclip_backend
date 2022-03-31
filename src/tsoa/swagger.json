@@ -207,45 +207,12 @@
 				"type": "object",
 				"additionalProperties": false
 			},
-			"Platform": {
-				"properties": {
-					"signature": {
-						"type": "string"
-					},
-					"url": {
-						"type": "string"
-					}
-				},
-				"required": [
-					"signature",
-					"url"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"Platforms": {
-				"properties": {
-					"darwin": {
-						"$ref": "#/components/schemas/Platform"
-					},
-					"linux": {
-						"$ref": "#/components/schemas/Platform"
-					},
-					"win64": {
-						"$ref": "#/components/schemas/Platform"
-					}
-				},
-				"required": [
-					"darwin",
-					"linux",
-					"win64"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
 			"Updater": {
 				"properties": {
-					"name": {
+					"url": {
+						"type": "string"
+					},
+					"version": {
 						"type": "string"
 					},
 					"notes": {
@@ -254,15 +221,16 @@
 					"pub_date": {
 						"type": "string"
 					},
-					"platforms": {
-						"$ref": "#/components/schemas/Platforms"
+					"signature": {
+						"type": "string"
 					}
 				},
 				"required": [
-					"name",
+					"url",
+					"version",
 					"notes",
 					"pub_date",
-					"platforms"
+					"signature"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -507,7 +475,7 @@
 				}
 			}
 		},
-		"/updater": {
+		"/updater/{target}/{version}": {
 			"get": {
 				"operationId": "GetUpdate",
 				"responses": {
@@ -525,9 +493,25 @@
 						"description": "no update"
 					}
 				},
-				"summary": "Get update for desktop app",
 				"security": [],
-				"parameters": []
+				"parameters": [
+					{
+						"in": "path",
+						"name": "target",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "version",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
 			}
 		}
 	},
