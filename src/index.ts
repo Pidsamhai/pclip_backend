@@ -2,24 +2,25 @@ import express from "express";
 import cors from "cors";
 import rateLimit from "express-rate-limit";
 import { RegisterRoutes } from "./tsoa/routes";
-import swaggerUi from "swagger-ui-express";
-import docs from "./tsoa/swagger.json";
 import loggerMiddleware from "./middleware/logger.middleware";
 import notFound from "./component/notfound";
+import path from "path";
 
 const server = express();
 const port = process.env.PORT || 5000;
 server.use(express.json());
-
 server.use(cors({}));
 
 server.use(
-  "/api-docs",
-  swaggerUi.serve,
-  swaggerUi.setup(docs, {
-    customSiteTitle: "Api Docs",
-  })
+  "/api-docs/swagger.json",
+  express.static(path.resolve(__dirname, "tsoa", "swagger.json"))
 );
+
+server.use(
+  "/api-docs",
+  express.static(path.resolve(__dirname, "..", "swagger-ui"))
+);
+
 RegisterRoutes(server);
 
 server.use(

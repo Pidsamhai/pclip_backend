@@ -15,7 +15,8 @@
         "sourceType": "module"
     },
     "ignorePatterns": [
-        "/dist/**/*"
+        "/dist/**/*",
+        "swagger-ui/**/*"
       ],
     "plugins": [
         "@typescript-eslint"
