@@ -21,6 +21,8 @@ server.use(
   express.static(path.resolve(__dirname, "..", "swagger-ui"))
 );
 
+server.use(loggerMiddleware);
+
 RegisterRoutes(server);
 
 server.use(
