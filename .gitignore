@@ -1,5 +1,7 @@
 dist
 
+!swagger-ui/dist
+
 node_modules/
 
 **/**/.DS_Store
@@ -11,3 +13,4 @@ node_modules/
 # Supabase
 **/supabase/.branches
 **/supabase/.temp
+package-lock.json

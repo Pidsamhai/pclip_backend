@@ -8,7 +8,7 @@ export default function (req: Request, _res: Response, next: NextFunction) {
   console.info("\x1b[36m", JSON.stringify(req.headers, null, 2));
   console.info("\x1b[36m", "Params: ");
   console.info("\x1b[36m", JSON.stringify(req.params, null, 2));
-  console.info("\x1b[36m", `Body: ${JSON.stringify(req.body, null, 2)}`);
+  console.info("\x1b[36m", `Body: ${JSON.stringify(req.params, null, 2)}`);
   console.info("\x1b[32m", "####################################");
   next();
 }

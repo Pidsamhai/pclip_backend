@@ -1,0 +1,539 @@
+{
+	"components": {
+		"examples": {},
+		"headers": {},
+		"parameters": {},
+		"requestBodies": {},
+		"responses": {},
+		"schemas": {
+			"UserIdentity": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"user_id": {
+						"type": "string"
+					},
+					"identity_data": {
+						"properties": {},
+						"additionalProperties": {},
+						"type": "object"
+					},
+					"provider": {
+						"type": "string"
+					},
+					"created_at": {
+						"type": "string"
+					},
+					"last_sign_in_at": {
+						"type": "string"
+					},
+					"updated_at": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"id",
+					"user_id",
+					"identity_data",
+					"provider",
+					"created_at",
+					"last_sign_in_at"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"User": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"app_metadata": {
+						"properties": {
+							"provider": {
+								"type": "string"
+							}
+						},
+						"additionalProperties": {},
+						"type": "object"
+					},
+					"user_metadata": {
+						"properties": {},
+						"additionalProperties": {},
+						"type": "object"
+					},
+					"aud": {
+						"type": "string"
+					},
+					"confirmation_sent_at": {
+						"type": "string"
+					},
+					"recovery_sent_at": {
+						"type": "string"
+					},
+					"invited_at": {
+						"type": "string"
+					},
+					"action_link": {
+						"type": "string"
+					},
+					"email": {
+						"type": "string"
+					},
+					"phone": {
+						"type": "string"
+					},
+					"created_at": {
+						"type": "string"
+					},
+					"confirmed_at": {
+						"type": "string"
+					},
+					"email_confirmed_at": {
+						"type": "string"
+					},
+					"phone_confirmed_at": {
+						"type": "string"
+					},
+					"last_sign_in_at": {
+						"type": "string"
+					},
+					"role": {
+						"type": "string"
+					},
+					"updated_at": {
+						"type": "string"
+					},
+					"identities": {
+						"items": {
+							"$ref": "#/components/schemas/UserIdentity"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"id",
+					"app_metadata",
+					"user_metadata",
+					"aud",
+					"created_at"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Session": {
+				"properties": {
+					"provider_token": {
+						"type": "string",
+						"nullable": true
+					},
+					"access_token": {
+						"type": "string"
+					},
+					"expires_in": {
+						"type": "number",
+						"format": "double",
+						"description": "The number of seconds until the token expires (since it was issued). Returned when a login is confirmed."
+					},
+					"expires_at": {
+						"type": "number",
+						"format": "double",
+						"description": "A timestamp of when the token will expire. Returned when a login is confirmed."
+					},
+					"refresh_token": {
+						"type": "string"
+					},
+					"token_type": {
+						"type": "string"
+					},
+					"user": {
+						"allOf": [
+							{
+								"$ref": "#/components/schemas/User"
+							}
+						],
+						"nullable": true
+					}
+				},
+				"required": [
+					"access_token",
+					"token_type",
+					"user"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"UnAuthorized": {
+				"properties": {
+					"status": {
+						"type": "number",
+						"enum": [
+							401
+						],
+						"nullable": false
+					},
+					"message": {
+						"type": "string",
+						"enum": [
+							"UnAuthorized"
+						],
+						"nullable": false
+					}
+				},
+				"required": [
+					"status",
+					"message"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"JoinRoomBodyParams": {
+				"properties": {
+					"invite_id": {
+						"type": "string"
+					},
+					"secret": {
+						"type": "string"
+					},
+					"device_name": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"invite_id",
+					"secret",
+					"device_name"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Platform": {
+				"properties": {
+					"signature": {
+						"type": "string"
+					},
+					"url": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"signature",
+					"url"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Platforms": {
+				"properties": {
+					"darwin": {
+						"$ref": "#/components/schemas/Platform"
+					},
+					"linux": {
+						"$ref": "#/components/schemas/Platform"
+					},
+					"win64": {
+						"$ref": "#/components/schemas/Platform"
+					}
+				},
+				"required": [
+					"darwin",
+					"linux",
+					"win64"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Updater": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"notes": {
+						"type": "string"
+					},
+					"pub_date": {
+						"type": "string"
+					},
+					"platforms": {
+						"$ref": "#/components/schemas/Platforms"
+					}
+				},
+				"required": [
+					"name",
+					"notes",
+					"pub_date",
+					"platforms"
+				],
+				"type": "object",
+				"additionalProperties": false
+			}
+		},
+		"securitySchemes": {
+			"SECRET": {
+				"type": "http",
+				"scheme": "bearer",
+				"bearerFormat": "JWT"
+			},
+			"ANON": {
+				"type": "http",
+				"scheme": "bearer",
+				"bearerFormat": "JWT"
+			},
+			"USER": {
+				"type": "http",
+				"scheme": "bearer",
+				"bearerFormat": "JWT"
+			}
+		}
+	},
+	"info": {
+		"title": "Pclip Api docs",
+		"version": "1.0.0",
+		"description": "Express application template using typescript and eslint",
+		"license": {
+			"name": "MIT"
+		},
+		"contact": {
+			"name": "Pisamhai ",
+			"url": "พิสมัย"
+		}
+	},
+	"openapi": "3.0.0",
+	"paths": {
+		"/auth/anonymous": {
+			"post": {
+				"operationId": "CreateAnonymousAccount",
+				"responses": {
+					"201": {
+						"description": "success",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Session"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "error",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/UnAuthorized"
+								}
+							}
+						}
+					}
+				},
+				"summary": "Create an anonymous account",
+				"security": [
+					{
+						"SECRET": []
+					}
+				],
+				"parameters": []
+			}
+		},
+		"/auth/mockuser": {
+			"post": {
+				"operationId": "CreateMockUser",
+				"responses": {
+					"201": {
+						"description": "success",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"token": {
+											"type": "string"
+										},
+										"password": {
+											"type": "string"
+										},
+										"email": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"token",
+										"password",
+										"email"
+									],
+									"type": "object"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "error",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/UnAuthorized"
+								}
+							}
+						}
+					}
+				},
+				"summary": "Create mock user with verified email",
+				"security": [
+					{
+						"SECRET": []
+					}
+				],
+				"parameters": []
+			}
+		},
+		"/room/join": {
+			"post": {
+				"operationId": "JoinRoom",
+				"responses": {
+					"201": {
+						"description": "success",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"secret": {},
+										"room_id": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"secret",
+										"room_id"
+									],
+									"type": "object"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "error",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/UnAuthorized"
+								}
+							}
+						}
+					}
+				},
+				"summary": "Create room invite",
+				"security": [
+					{
+						"SECRET": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/JoinRoomBodyParams"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/room/{room_id}/invite": {
+			"post": {
+				"operationId": "InviteMember",
+				"responses": {
+					"201": {
+						"description": "success",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"secret": {},
+										"invite_id": {}
+									},
+									"required": [
+										"secret",
+										"invite_id"
+									],
+									"type": "object"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "error",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/UnAuthorized"
+								}
+							}
+						}
+					}
+				},
+				"summary": "Join room",
+				"security": [
+					{
+						"SECRET": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "room_id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"room_secret": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"room_secret"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/updater": {
+			"get": {
+				"operationId": "GetUpdate",
+				"responses": {
+					"200": {
+						"description": "success",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Updater"
+								}
+							}
+						}
+					},
+					"204": {
+						"description": "no update"
+					}
+				},
+				"summary": "Get update for desktop app",
+				"security": [],
+				"parameters": []
+			}
+		}
+	},
+	"servers": [
+		{
+			"url": "/api/v1"
+		}
+	]
+}
