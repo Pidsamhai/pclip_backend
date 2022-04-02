@@ -9,7 +9,7 @@
     "lint": "eslint --ext .js,.ts .",
     "build": "tsc",
     "build:api": "tsoa spec-and-routes && tsc",
-    "serve": "npx nodemon --exec 'npm run build:api && ts-node src/index.ts'"
+    "serve": "nodemon --exec 'npm run build:api && ts-node src/index.ts'"
   },
   "author": "Pisamhai (พิสมัย)",
   "license": "MIT",
@@ -34,7 +34,7 @@
     "husky": "^7.0.4",
     "nodemon": "^2.0.15",
     "swagger-ui-dist": "^4.10.0",
-    "ts-node": "^10.4.0",
+    "ts-node": "^10.7.0",
     "tslint-config-prettier": "^1.18.0",
     "typescript": "^4.5.5",
     "vercel": "^24.0.1"
@@ -54,7 +54,6 @@
     "nodemon": "^2.0.15",
     "randomatic": "^3.1.1",
     "semver": "^7.3.5",
-    "ts-node": "^10.4.0",
     "tslint-config-prettier": "^1.18.0",
     "tsoa": "^3.14.1",
     "typescript": "^4.5.5",
